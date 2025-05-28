@@ -1,0 +1,202 @@
+create TABLE employee(
+  emp_id int ,
+  emp_addr varchar(50),
+  emp_name varchar(50),
+  emp_salary decimal(18,2),
+  emp_phone varchar(10)
+); 
+
+INSERT into employee  values(1,'butwal','Ayush',2000000000000,'9800000000');
+INSERT INTO employee (emp_id, emp_addr, emp_name, emp_salary, emp_phone) VALUES
+(2, 'ktm', 'Sudarshan', 5, '9877545734'),
+(3, 'hetauda', 'Pujanan', 65334, '9843453231'),
+(4, 'pokhara', 'Ramesh', 75000, '9812345678'),
+(5, 'lalitpur', 'Sita', 90000, '9801234567'),
+(6, 'biratnagar', 'Hari', 120000, '9823456789'),
+(7, 'dharan', 'Shyam', 65000, '9841231234'),
+(8, 'nepalgunj', 'Gita', 88000, '9865432109'),
+(9, 'janakpur', 'Kamal', 72000, '9811122233'),
+(10, 'bhairahawa', 'Manoj', 100000, '9809876543');
+SELECT * from employee
+
+SELECT * from employee 
+where emp_salary > 50000
+
+update employee
+set emp_addr='pokhara'
+where emp_id = 2
+
+DELETE from employee
+where emp_name = 'sudarshan'
+
+
+
+create table customers (
+  c_id int,
+  c_name varchar(50),
+  c_address varchar(50),
+  c_phone varchar(50),
+)
+
+create table orders (
+  o_id int,
+  o_name varchar(50),
+  o_qty varchar(50),
+  c_id int,
+)
+
+INSERT INTO customers (c_id, c_name, c_address, c_phone) VALUES
+(1, 'Aayush', 'Butwal', '9877545734'),
+(2, 'Bina', 'Kathmandu', '9801123456'),
+(3, 'Suresh', 'Pokhara', '9812345678'),
+(4, 'Rita', 'Biratnagar', '9841122334'),
+(5, 'Kiran', 'Lalitpur', '9865432109'),
+(6, 'Nisha', 'Dharan', '9809876543'),
+(7, 'Manoj', 'Bhaktapur', '9812233445'),
+(8, 'Priya', 'Hetauda', '9845566778'),
+(9, 'Anil', 'Nepalgunj', '9807766554'),
+(10, 'Sunita', 'Janakpur', '9823456789'),
+(11, 'Deepak', 'Chitwan', '9833344556'),
+(12, 'Reema', 'Itahari', '9811998877'),
+(13, 'Ramesh', 'Tulsipur', '9803332221'),
+(14, 'Shreya', 'Gorkha', '9844455667'),
+(15, 'Keshav', 'Dhangadhi', '9808765432'),
+(16, 'Laxmi', 'Bharatpur', '9811122233'),
+(17, 'Santosh', 'Birgunj', '9846677889'),
+(18, 'Meena', 'Besisahar', '9803344556'),
+(19, 'Govinda', 'Dang', '9814455667'),
+(20, 'Kritika', 'Banepa', '9832233445');
+
+SELECT * from customers 
+
+INSERT INTO orders (o_id, o_name, o_qty, c_id) VALUES
+(1, 'Laptop', '1', 1),
+(2, 'Mobile', '2', 2),
+(3, 'Keyboard', '3',oi 3),
+(4, 'Mouse', '1', 4),
+(5, 'Monitor', '2', 5),
+(6, 'Tablet', '1', 6),
+(7, 'Printer', '1', 7),
+(8, 'Scanner', '1', 8),
+(9, 'Router', '2', 9),
+(10, 'Switch', '1', 10),
+(11, 'USB Drive', '5', 11),
+(12, 'Hard Disk', '2', 12),
+(13, 'SSD', '1', 13),
+(14, 'RAM', '4', 14),
+(15, 'Power Bank', '2', 15),
+(16, 'Charger', '3', 16),
+(17, 'Camera', '1', 17),
+(18, 'Tripod', '1', 18),
+(19, 'Headphones', '2', 19),
+(20, 'Speakers', '2', 20),
+(21, 'Graphics Card', '1', 1),
+(22, 'Cooling Fan', '3', 2),
+(23, 'Laptop Bag', '2', 3),
+(24, 'Stylus Pen', '1', 4),
+(25, 'Webcam', '1', 5),
+(26, 'Ethernet Cable', '4', 6),
+(27, 'Projector', '1', 7),
+(28, 'Whiteboard', '1', 8),
+(29, 'Desk Lamp', '2', 9),
+(30, 'Chair', '3', 10),
+(31, 'Desk', '1', 11),
+(32, 'Notebook', '10', 12),
+(33, 'Pen Drive', '5', 13),
+(34, 'Smart Watch', '1', 14),
+(35, 'Fitness Tracker', '1', 15),
+(36, 'Mic', '2', 16),
+(37, 'TV', '1', 17),
+(38, 'Air Conditioner', '1', 18),
+(39, 'Heater', '1', 19),
+(40, 'Fan', '2', 20);
+
+UPDATE orders SET o_amt = 100000.000 WHERE o_id = 1;
+UPDATE orders SET o_amt = 50000.000 WHERE o_id = 2;
+UPDATE orders SET o_amt = 4500.000 WHERE o_id = 3;
+UPDATE orders SET o_amt = 1500.000 WHERE o_id = 4;
+UPDATE orders SET o_amt = 20000.000 WHERE o_id = 5;
+UPDATE orders SET o_amt = 30000.000 WHERE o_id = 6;
+UPDATE orders SET o_amt = 12000.000 WHERE o_id = 7;
+UPDATE orders SET o_amt = 15000.000 WHERE o_id = 8;
+UPDATE orders SET o_amt = 5000.000 WHERE o_id = 9;
+UPDATE orders SET o_amt = 7000.000 WHERE o_id = 10;
+UPDATE orders SET o_amt = 2500.000 WHERE o_id = 11;
+UPDATE orders SET o_amt = 3500.000 WHERE o_id = 12;
+UPDATE orders SET o_amt = 8000.000 WHERE o_id = 13;
+UPDATE orders SET o_amt = 6000.000 WHERE o_id = 14;
+UPDATE orders SET o_amt = 3000.000 WHERE o_id = 15;
+UPDATE orders SET o_amt = 1800.000 WHERE o_id = 16;
+UPDATE orders SET o_amt = 25000.000 WHERE o_id = 17;
+UPDATE orders SET o_amt = 2200.000 WHERE o_id = 18;
+UPDATE orders SET o_amt = 4000.000 WHERE o_id = 19;
+UPDATE orders SET o_amt = 4500.000 WHERE o_id = 20;
+UPDATE orders SET o_amt = 32000.000 WHERE o_id = 21;
+UPDATE orders SET o_amt = 2400.000 WHERE o_id = 22;
+UPDATE orders SET o_amt = 1500.000 WHERE o_id = 23;
+UPDATE orders SET o_amt = 2000.000 WHERE o_id = 24;
+UPDATE orders SET o_amt = 6000.000 WHERE o_id = 25;
+UPDATE orders SET o_amt = 1200.000 WHERE o_id = 26;
+UPDATE orders SET o_amt = 30000.000 WHERE o_id = 27;
+UPDATE orders SET o_amt = 8000.000 WHERE o_id = 28;
+UPDATE orders SET o_amt = 1600.000 WHERE o_id = 29;
+UPDATE orders SET o_amt = 7000.000 WHERE o_id = 30;
+UPDATE orders SET o_amt = 10000.000 WHERE o_id = 31;
+UPDATE orders SET o_amt = 1200.000 WHERE o_id = 32;
+UPDATE orders SET o_amt = 1400.000 WHERE o_id = 33;
+UPDATE orders SET o_amt = 20000.000 WHERE o_id = 34;
+UPDATE orders SET o_amt = 17000.000 WHERE o_id = 35;
+UPDATE orders SET o_amt = 2500.000 WHERE o_id = 36;
+UPDATE orders SET o_amt = 55000.000 WHERE o_id = 37;
+UPDATE orders SET o_amt = 60000.000 WHERE o_id = 38;
+UPDATE orders SET o_amt = 3000.000 WHERE o_id = 39;
+UPDATE orders SET o_amt = 2000.000 WHERE o_id = 40;
+
+alter table orders add o_amt decimal(18,3)
+SELECT * from orders 
+
+
+select customers.c_id,c_name,c_address,c_phone from customers,orders
+where customers.c_id = orders.c_id and 
+orders.o_amt = (SELECT max(o_amt) from orders)
+
+SELECT orders.c_id ,COUNT(orders.o_qty) as total_order_counts
+from customers,orders
+where customers.c_id = orders.c_id 
+GROUP by orders.c_id
+
+
+select * from orders
+
+SELECT orders.c_id,customers.c_name,sum(orders.o_amt) as total_order_amt_of_each_customer
+FROM customers,orders
+WHERE customers.c_id = orders.c_id
+GROUP by orders.c_id,customers.c_name
+having sum(orders.o_amt)>10000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
