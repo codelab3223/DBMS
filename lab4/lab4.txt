@@ -1,0 +1,141 @@
+create database aayush_lab_4;
+use aayush_lab_4;
+
+create table salesman(
+	salesman_id int primary key,
+	names varchar(50),
+	city varchar(50),
+	commission decimal(2,2)
+);
+
+
+create table customer(
+	customer_id int primary key,
+	cust_name varchar(50),
+	city varchar(50),
+	grade int,
+	salesman_id int foreign key references salesman(salesman_id)
+);
+
+
+create table orders(
+	ord_no int primary key,
+	purch_amt decimal(18,3),
+	ord_date datetime,
+	customer_id int foreign key references customer(customer_id), 
+	salesman_id int foreign key references salesman(salesman_id)
+);
+
+INSERT INTO salesman (salesman_id, names, city, commission)
+VALUES
+    (5001, 'Ayush', 'KTM', 0.15),
+    (5002, 'Sita', 'PKR', 0.12),
+    (5003, 'Ram', 'BKT', 0.10),
+    (5004, 'John', 'Lalitpur', 0.20),
+    (5005, 'Anita', 'Bharatpur', 0.18),
+    (5006, 'Ravi', 'Dharan', 0.13);
+
+
+INSERT INTO customer (customer_id, cust_name, city, grade, salesman_id)
+VALUES
+    (3001, 'Aarav', 'KTM', 100, 5001),
+    (3002, 'XYZ', 'KTM', 100, 5001),
+    (3003, 'Rita', 'PKR', 200, 5002),
+    (3004, 'Hari', 'BKT', 150, 5003),
+    (3005, 'Nina', 'Lalitpur', 250, 5004),
+    (3006, 'Samir', 'Bharatpur', 100, 5005),
+    (3007, 'Manisha', 'Dharan', 200, 5006),
+    (3008, 'Prakash', 'KTM', 300, 5001);
+
+INSERT INTO orders (ord_no, purch_amt, ord_date, customer_id, salesman_id)
+VALUES
+    (7001, 150.520, '2012-10-05', 3002, 5001),
+    (7002, 250.000, '2012-11-15', 3001, 5001),
+    (7003, 100.750, '2012-12-01', 3003, 5002),
+    (7004, 300.000, '2012-10-20', 3004, 5003),
+    (7005, 180.250, '2012-12-05', 3005, 5004),
+    (7006, 90.000,  '2012-10-15', 3006, 5005),
+    (7007, 400.000, '2012-11-10', 3007, 5006),
+    (7008, 225.500, '2012-10-25', 3008, 5001),
+    (7009, 199.990, '2012-11-18', 3002, 5001),
+    (7010, 330.330, '2012-12-02', 3003, 5002),
+    (7011, 120.000, '2012-12-10', 3005, 5004),
+    (7012, 275.750, '2012-11-22', 3001, 5001);
+
+select *
+from customer
+
+select *
+from salesman
+
+select *
+from orders
+
+//1. List all the customers and their respective salesman name, who belongs to the same city
+
+select c.cust_name,s.names, c.city,s.city
+from salesman as s
+inner join customer as c
+on s.salesman_id = c.salesman_id
+where c.city = s.city;
+
+2. 
+
+select o.ord_no ,o.purch_amt 
+from orders o
+where purch_amt between 100 and 150;
+
+3.
+
+select s.salesman_id,s.names , c.cust_name 
+from salesman s
+inner join customer c 
+on s.salesman_id = c.salesman_id
+
+
+4.
+
+select *, commission * 100 as commission_percent
+from salesman 
+where commission > 0.12;
+
+5. Find all orders placed in November 2012.
+
+select max(datename (mm,ord_date)) as monthly, count(purch_amt)
+from orders 
+group by month(ord_date)
+
+6.Find those salesperson do not live in same city where their customer live and recieved from company more than 12%
+
+select s.salesman_id,s.names,s.city,c.cust_name,c.city
+from salesman s
+inner join customer c
+on s.salesman_id = c.salesman_id
+where s.city <> c.city
+and s.commission > 0.12
+
+
+7. Make a report with customer name , city , order no, order date and order 
+amount in asc order accoridng to the order date to find that either any of the existing customer
+  have placed no order or placed one or more orders
+
+  //asc acc to order date
+  // 
+
+  select  c.customer_id,c.cust_name,o.ord_no,o.ord_date,count(o.customer_id) as order_amount
+  from customer c
+  left join orders o
+  on c.customer_id = o.customer_id
+  group by c.customer_id,c.cust_name,o.ord_no,o.ord_date
+  order by o.ord_date
+
+  select  c.customer_id,c.cust_name,o.ord_no,o.ord_date,count(o.customer_id) as order_amount
+  from customer c
+  left join orders o
+  on c.customer_id = o.customer_id
+  group by c.customer_id,c.cust_name,o.ord_no,o.ord_date
+  order by o.ord_date
+
+
+
+8. Make a list in ascending order for the salesman who works either for one or more customer or not yet joined underr any of the customer
