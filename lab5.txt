@@ -1,0 +1,71 @@
+use aayush_lab_4;
+
+
+select * from customer
+
+select * from orders 
+
+select * from salesman 
+
+
+
+SELECT o.ord_no,s.names
+FROM orders as o
+join salesman s on s.salesman_id = o.salesman_id 
+WHERE  o.salesman_id IN (
+    SELECT salesman_id
+    FROM salesman
+    WHERE  names = 'Sita'
+);
+
+
+SELECT o.ord_no,s.names 
+FROM orders as o
+join salesman s on s.salesman_id = o.salesman_id 
+WHERE  o.salesman_id IN (
+    SELECT salesman_id
+    FROM salesman
+    WHERE  city = 'KTM'
+);
+
+
+
+SELECT *
+FROM orders
+WHERE salesman_id IN (
+    SELECT DISTINCT salesman_id
+    FROM orders
+    WHERE customer_id = 3007
+);
+
+
+select o.purch_amt 
+from orders o
+where purch_amt > (select avg(purch_amt) from orders where ord_date='2012-10-15');
+
+
+
+
+
+select count(grade) as grade_count 
+from customer 
+where grade > (select avg(grade) 
+               from customer 
+               where city='KTM')
+
+
+
+
+select s.names 
+from salesman as s 
+where s.city ='PKR' 
+union select c.cust_name 
+from customer c
+where c.city ='PKR'
+
+
+
+
+
+select distinct s.salesman_id ,s.city from salesman s  intersect  select customer.salesman_id,customer.city from customer
+
