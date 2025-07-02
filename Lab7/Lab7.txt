@@ -1,0 +1,68 @@
+use aayush_lab_4;
+
+select * 
+from customer;
+
+select *
+from orders;
+
+select *
+from salesman;
+
+
+--Createa a view for those salesperson who belong to KTM
+create view salesperson_view1 as
+select * from salesman
+where city = 'KTM';
+
+select * from salesperson_view1
+
+
+
+-- Create a view to count number of customer in each grade
+create view count_no_grades as
+select  grade, COUNT(customer_id) as total_count_per_grade
+from customer
+group by grade
+
+select * from count_no_grades
+
+
+
+--Create a view to count the number of unique customer,
+--compute average and total purchase amount of customer order by each date
+create view cust_view_tot_purch_sh  as
+select  distinct o.customer_id, AVG(o.purch_amt) as average_purch , SUM(o.purch_amt) as total_sum,o.ord_date
+from orders o 
+group by o.customer_id, o.ord_date
+
+select * from cust_view_tot_purch_sh
+order by ord_date
+
+-- Find those salesperson who generated orders for their customer but not located in the same city
+
+select  names 
+from salesman s
+inner join customer c
+on s.salesman_id = c.salesman_id
+where s.city <> c.city
+
+
+-- Find those customers who seved by 
+-- saleperson and the saleperson works at the commission in range 12% to 14%
+
+select cust_name from customer c
+inner join salesman s 
+on c.salesman_id = s.salesman_id
+where s.commission BETWEEN 0.12 AND 0.14
+
+--Find those salesperson ordered by customer whose grade is greater than or equal to 200 , compute 
+-- purchase amount * commission as commission and return customer name, commission as commission percent
+select c.cust_name, s.commission*o.purch_amt as COMMISSION,s.commission*100 as commission_percent,c.grade
+from customer c
+inner join salesman s 
+on c.salesman_id = s.salesman_id
+inner join orders o
+on o.salesman_id = s.salesman_id
+where c.grade >= 200
+order by c.grade
