@@ -1,0 +1,181 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+
+
+
+
+\begin{document}
+
+
+\section*{2. SQL Queries and Results}
+
+\subsection*{Query 1: Salesperson Based in Kathmandu (KTM)}
+\textbf{Question:} Create a view for salespeople who belong to Kathmandu (KTM).
+
+\textbf{Query:}
+\begin{verbatim}
+create view salesperson_view1 as
+select * from salesman
+where city = 'KTM';
+
+select * from salesperson_view1;
+\end{verbatim}
+
+\textbf{Result Table:}
+\begin{longtable}{|c|c|c|c|}
+\hline
+\textbf{Salesman ID} & \textbf{Name} & \textbf{City} & \textbf{Commission} \\
+\hline
+\endfirsthead
+\hline
+5001 & Ayush & KTM & 0.15 \\
+5001 & XYZ & KTM & 0.15 \\
+5001 & Prakash & KTM & 0.15 \\
+\hline
+\end{longtable}
+
+\subsection*{Query 2: Count the Number of Customers in Each Grade}
+\textbf{Question:} Create a view to count the number of customers in each grade.
+
+\textbf{Query:}
+\begin{verbatim}
+create view count_no_grades as
+select grade, COUNT(customer_id) as total_count_per_grade
+from customer
+group by grade;
+
+select * from count_no_grades;
+\end{verbatim}
+
+\textbf{Result Table:}
+\begin{longtable}{|c|c|}
+\hline
+\textbf{Grade} & \textbf{Total Customers} \\
+\hline
+\endfirsthead
+\hline
+100 & 4 \\
+150 & 1 \\
+200 & 2 \\
+250 & 1 \\
+300 & 1 \\
+\hline
+\end{longtable}
+
+\subsection*{Query 3: Count Unique Customers and Compute Purchase Metrics}
+\textbf{Question:} Count the number of unique customers, compute the average and total purchase amount for each customer, ordered by each date.
+
+\textbf{Query:}
+\begin{verbatim}
+create view cust_view_tot_purch_sh as
+select distinct o.customer_id, AVG(o.purch_amt) as average_purch, 
+       SUM(o.purch_amt) as total_sum, o.ord_date
+from orders o 
+group by o.customer_id, o.ord_date;
+
+select * from cust_view_tot_purch_sh
+order by ord_date;
+\end{verbatim}
+
+\textbf{Result Table:}
+\begin{longtable}{|c|c|c|c|}
+\hline
+\textbf{Customer ID} & \textbf{Average Purchase Amount} & \textbf{Total Purchase Amount} & \textbf{Order Date} \\
+\hline
+\endfirsthead
+\hline
+3002 & 150.520 & 150.520 & 2012-10-05 \\
+3001 & 250.000 & 250.000 & 2012-11-15 \\
+3003 & 100.750 & 100.750 & 2012-12-01 \\
+3004 & 300.000 & 300.000 & 2012-10-20 \\
+3005 & 180.250 & 180.250 & 2012-12-05 \\
+3006 & 90.000  & 90.000  & 2012-10-15 \\
+3007 & 400.000 & 400.000 & 2012-11-10 \\
+3008 & 225.500 & 225.500 & 2012-10-25 \\
+\hline
+\end{longtable}
+
+\subsection*{Query 4: Salesperson Generated Orders for Customers in Different Cities}
+\textbf{Question:} Find those salespeople who have generated orders for their customers but are not located in the same city.
+
+\textbf{Query:}
+\begin{verbatim}
+select names 
+from salesman s
+inner join customer c
+on s.salesman_id = c.salesman_id
+where s.city <> c.city;
+\end{verbatim}
+
+\textbf{Result Table:}
+\begin{longtable}{|c|}
+\hline
+\textbf{Salesperson Name} \\
+\hline
+\endfirsthead
+\hline
+Sita \\
+Ram \\
+Anita \\
+\hline
+\end{longtable}
+
+\newpage
+\subsection*{Query 5: Customers Served by Salespeople with Commission Between 12\% and 14\%}
+\textbf{Question:} Find customers served by salespeople with a commission between 12\% and 14\%.
+
+\textbf{Query:}
+\begin{verbatim}
+select cust_name from customer c
+inner join salesman s 
+on c.salesman_id = s.salesman_id
+where s.commission BETWEEN 0.12 AND 0.14;
+\end{verbatim}
+
+\textbf{Result Table:}
+\begin{longtable}{|c|}
+\hline
+\textbf{Customer Name} \\
+\hline
+XYZ \\
+Samir \\
+\hline
+\end{longtable}
+
+\subsection*{Query 6: Compute Purchase Amount and Commission for High-Grade Customers}
+\textbf{Question:} Find customers with grade greater than or equal to 200 and compute their commission based on their purchase amount.
+
+\textbf{Query:}
+\begin{verbatim}
+select c.cust_name, s.commission*o.purch_amt as COMMISSION,
+       s.commission*100 as commission_percent, c.grade
+from customer c
+inner join salesman s 
+on c.salesman_id = s.salesman_id
+inner join orders o
+on o.salesman_id = s.salesman_id
+where c.grade >= 200
+order by c.grade;
+\end{verbatim}
+
+\textbf{Result Table:}
+\begin{longtable}{|c|c|c|c|}
+\hline
+\textbf{Customer Name} & \textbf{Commission} & \textbf{Commission Percent} & \textbf{Grade} \\
+\hline
+\endfirsthead
+\hline
+Rita & 12.0750 & 12.0750 & 200 \\
+Manisha & 26.0000 & 13.0000 & 200 \\
+Nina & 36.0600 & 18.0300 & 250 \\
+Prakash & 33.8250 & 16.9125 & 300 \\
+\hline
+\end{longtable}
+
+\end{document}
